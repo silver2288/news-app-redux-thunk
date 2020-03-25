@@ -9,7 +9,8 @@ function composeNews(
     newsData: [],
     isFetching: false,
     isError: false,
-    lastUpdated: null
+    lastUpdated: null,
+    dataCategory: []
   },
   action
 ) {

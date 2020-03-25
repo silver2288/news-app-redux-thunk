@@ -19,24 +19,21 @@ const asyncCatReducer = (state = initialState, action) => {
     case FETCH_CATEGORIES:
       return {
         ...state,
-        ...{
-          isFetching: true,
-          isError: false
-        }
+        isFetching: true,
+        isError: false
       };
 
     case FETCH_CATEGORIES_SUCCESS:
       return {
         ...state,
-        ...{
-          catData: action.data,
-          isFetching: false,
-          isError: false
-        }
+        catData: action.data,
+        isFetching: false,
+        isError: false
       };
 
     case FETCH_CATEGORIES_FAILED:
       return {
+        ...state,
         isError: true,
         isFetching: false
       };
@@ -44,17 +41,14 @@ const asyncCatReducer = (state = initialState, action) => {
     case ADD_CATEGORIES:
       return {
         ...state,
-        ...{
-          selected: [...state.selected, action.id]
-        }
+        //selected: [...state.selected, action.id]
+        selected: state.selected.concat(action.id)
       };
 
     case REMOVE_CATEGORIES:
       return {
         ...state,
-        ...{
-          selected: [...state.selected.filter(el => el !== action.id)]
-        }
+        selected: state.selected.filter(el => el !== action.id)
       };
 
     default:

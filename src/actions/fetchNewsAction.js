@@ -22,19 +22,20 @@ export const fetch_news_failed = () => {
   };
 };
 
-function getNews(id) {
+function getNews(id, color) {
   return dispatch => {
     dispatch(fetch_news(id));
     return fetch(`http://localhost:3000/newsByType-${id}`)
       .then(data => data.json())
       .then(data => {
+        data.map(n => (n.color = color));
         dispatch(fetch_news_success(data, id));
       })
       .catch(err => dispatch(fetch_news_failed(err)));
   };
 }
 
-export const thunk_getNews = id => {
+export const thunk_getNews = (id, color) => {
   return function(dispatch, getState) {
     const current = Date.now();
 
@@ -43,7 +44,7 @@ export const thunk_getNews = id => {
       (!getState().news[id].isFetching &&
         current - getState().news[id].lastUpdated > 300000)
     ) {
-      return dispatch(getNews(id, getState()));
+      return dispatch(getNews(id, color));
     } else {
       return Promise.resolve();
     }

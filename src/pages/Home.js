@@ -7,28 +7,9 @@ import Categories from "../components/categories";
 import News from "../components/news";
 import "../App.css";
 
-let state;
-
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    if (!state) {
-      this.state = {
-        categories: [],
-        filteredNews: [],
-        checked: []
-      };
-    } else {
-      this.state = state;
-    }
-  }
-
   componentDidMount() {
     this.props.dispatch(thunk_getCategories());
-  }
-
-  componentWillUnmount() {
-    state = this.state;
   }
 
   handleFilter = (id, isChecked, color) => {
@@ -38,12 +19,6 @@ class Home extends React.Component {
   render() {
     var news = [];
     this.props.data.categories.selected.map(sel => {
-      const seLCat = this.props.data.categories.catData.filter(
-        el => el.id.toString() === sel
-      );
-      this.props.data.news[sel].newsData.map(
-        el => (el.color = seLCat[0].color)
-      );
       return (news = news.concat(this.props.data.news[sel].newsData));
     });
     return (

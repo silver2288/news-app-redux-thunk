@@ -8,7 +8,8 @@ import {
 const initialState = {
   detailData: [],
   isFetching: false,
-  isError: false
+  isError: false,
+  color: ""
 };
 
 const asyncDetReducer = (state = initialState, action) => {
@@ -16,24 +17,22 @@ const asyncDetReducer = (state = initialState, action) => {
     case FETCH_DETAIL:
       return {
         ...state,
-        ...{
-          isFetching: true,
-          isError: false
-        }
+        isFetching: true,
+        isError: false
       };
 
     case FETCH_DETAIL_SUCCESS:
       return {
         ...state,
-        ...{
-          detailData: action.data,
-          isFetching: false,
-          isError: false
-        }
+        detailData: action.data,
+        isFetching: false,
+        isError: false,
+        color: action.color
       };
 
     case FETCH_DETAIL_FAILED:
       return {
+        ...state,
         isError: true,
         isFetching: false
       };

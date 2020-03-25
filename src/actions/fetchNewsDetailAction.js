@@ -8,10 +8,11 @@ export const fetch_detail = (categoryId, id) => {
 };
 
 export const FETCH_DETAIL_SUCCESS = "FETCH_DETAIL_SUCCESS";
-export const fetch_detail_success = detail => {
+export const fetch_detail_success = (detail, color) => {
   return {
     type: FETCH_DETAIL_SUCCESS,
-    data: detail
+    data: detail,
+    color: color
   };
 };
 
@@ -30,8 +31,8 @@ export const toogle_favorite = isFavorite => {
   };
 };
 
-export const thunk_getDetail = (categoryId, id) => {
-  return function(dispatch, getState) {
+function getDetail(categoryId, id) {
+  return dispatch => {
     dispatch(fetch_detail(categoryId, id));
     return fetch(`http://localhost:3000/newsByType-${categoryId}-${id}`)
       .then(data => data.json())
@@ -39,6 +40,19 @@ export const thunk_getDetail = (categoryId, id) => {
         dispatch(fetch_detail_success(data));
       })
       .catch(err => dispatch(fetch_detail_failed(err)));
+  };
+}
+
+export const thunk_getDetail = (categoryId, id) => {
+  return function(dispatch, getState) {
+    if (
+      getState().detail.detailData.id === undefined ||
+      getState().detail.detailData.id !== id
+    ) {
+      return dispatch(getDetail(categoryId, id));
+    } else {
+      return Promise.resolve();
+    }
   };
 };
 

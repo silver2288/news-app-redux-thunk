@@ -8,14 +8,6 @@ import {
 } from "../actions/fetchNewsDetailAction";
 
 class Detail extends React.Component {
-  state = {
-    id: null,
-    title: "",
-    description: "",
-    favorite: false,
-    content: ""
-  };
-
   componentDidMount() {
     this.props.dispatch(thunk_getDetail(this.props.categoryid, this.props.id));
   }
@@ -25,8 +17,14 @@ class Detail extends React.Component {
   }
 
   render() {
+    if (this.props.data.categories.catData.length > 0) {
+      const category = this.props.data.categories.catData.find(
+        el => el.id == this.props.categoryid
+      );
+      this.props.data.detail.color = category.color;
+    }
     return (
-      <div>
+      <div style={{ background: this.props.data.detail.color }}>
         <div className="title">
           <p>{this.props.data.detail.detailData.title}</p>
           <p>{this.props.data.detail.detailData.favorite}</p>

@@ -13,7 +13,11 @@ export default class DetailView extends React.Component {
             this.props.history.goBack();
           }}
         />
-        <Detail categoryid={params.categoryid} id={params.id} />
+        <Detail
+          categoryid={params.categoryid}
+          id={params.id}
+          color={params.color}
+        />
       </div>
     );
   }
