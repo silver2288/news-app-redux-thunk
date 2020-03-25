@@ -1,9 +1,13 @@
 import React from "react";
-import getDetail from "../entities/Detail";
+import { connect } from "react-redux";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import {
+  thunk_getDetail,
+  thunk_getDetail_favorite
+} from "../actions/fetchNewsDetailAction";
 
-export default class Detail extends React.Component {
+class Detail extends React.Component {
   state = {
     id: null,
     title: "",
@@ -13,40 +17,43 @@ export default class Detail extends React.Component {
   };
 
   componentDidMount() {
-    getDetail(this.props.categoryid, this.props.id).then(res => {
-      const detail = res.data;
-      this.setState({
-        id: detail.id,
-        title: detail.title,
-        description: detail.description,
-        favorite: detail.favorite,
-        content: detail.content
-      });
-    });
+    this.props.dispatch(thunk_getDetail(this.props.categoryid, this.props.id));
   }
 
   handleClick(isFavorite) {
-    alert("paco");
-    console.log("isFavorite ", isFavorite);
+    this.props.dispatch(thunk_getDetail_favorite(!isFavorite));
   }
 
   render() {
     return (
       <div>
         <div className="title">
-          <p>{this.state.title}</p>
-          <span onClick={() => this.handleClick(this.state.favorite)}>
+          <p>{this.props.data.detail.detailData.title}</p>
+          <p>{this.props.data.detail.detailData.favorite}</p>
+          <span
+            onClick={() =>
+              this.handleClick(this.props.data.detail.detailData.favorite)
+            }
+          >
             {" "}
-            {this.state.favorite ? (
+            {this.props.data.detail.detailData.favorite ? (
               <FavoriteIcon style={{ color: "red" }} />
             ) : (
               <FavoriteBorderIcon style={{ color: "red" }} />
             )}
           </span>
         </div>
-        <p>{this.state.description}</p>
-        <p>{this.state.content}</p>
+        <p>{this.props.data.detail.detailData.description}</p>
+        <p>{this.props.data.detail.detailData.content}</p>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state
+  };
+};
+
+export default connect(mapStateToProps)(Detail);

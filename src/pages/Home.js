@@ -1,14 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 import Header from "../components/header";
+import { thunk_getCategories } from "../actions/fetchCategoriesAction";
+import { toogleCategory } from "../actions/";
 import Categories from "../components/categories";
 import News from "../components/news";
-import getCategories from "../entities/Categories";
-import getNews from "../entities/News";
 import "../App.css";
-let state;
-const arr = [];
 
-export default class Home extends React.Component {
+let state;
+
+class Home extends React.Component {
   constructor(props) {
     super(props);
     if (!state) {
@@ -23,10 +24,7 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.checked);
-    getCategories().then(res => {
-      this.setState({ categories: res.data });
-    });
+    this.props.dispatch(thunk_getCategories());
   }
 
   componentWillUnmount() {
@@ -34,43 +32,44 @@ export default class Home extends React.Component {
   }
 
   handleFilter = (id, isChecked, color) => {
-    if (isChecked) {
-      arr.push(id);
-      getNews(id).then(res => {
-        res.data.forEach(element => {
-          element.color = color;
-        });
-        let news = res.data;
-        this.setState(previousState => ({
-          filteredNews: [...previousState.filteredNews, ...news],
-          checked: arr
-        }));
-      });
-    } else {
-      var checkedNews = this.state.filteredNews.filter(val => {
-        return val.categoryId !== parseInt(id);
-      });
-      this.setState({ filteredNews: checkedNews });
-    }
+    this.props.dispatch(toogleCategory(id, isChecked, color));
   };
 
   render() {
+    var news = [];
+    this.props.data.categories.selected.map(sel => {
+      const seLCat = this.props.data.categories.catData.filter(
+        el => el.id.toString() === sel
+      );
+      this.props.data.news[sel].newsData.map(
+        el => (el.color = seLCat[0].color)
+      );
+      return (news = news.concat(this.props.data.news[sel].newsData));
+    });
     return (
       <div className="container">
         <Header />
         <section>
           <div className="regionLeft">
             <Categories
-              categories={this.state.categories}
+              categories={this.props.data.categories.catData}
               filterNews={this.handleFilter}
-              checked={this.state.checked}
+              checked={this.props.data.categories.selected}
             />
           </div>
           <div className="regionRight">
-            <News news={this.state.filteredNews} />
+            <News news={news} />
           </div>
         </section>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state
+  };
+};
+
+export default connect(mapStateToProps)(Home);
