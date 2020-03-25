@@ -5,6 +5,7 @@ import { thunk_getCategories } from "../actions/fetchCategoriesAction";
 import { toogleCategory } from "../actions/";
 import Categories from "../components/categories";
 import News from "../components/news";
+import Page from "./Page";
 import "../App.css";
 
 class Home extends React.Component {
@@ -22,21 +23,23 @@ class Home extends React.Component {
       return (news = news.concat(this.props.data.news[sel].newsData));
     });
     return (
-      <div className="container">
-        <Header />
-        <section>
-          <div className="regionLeft">
-            <Categories
-              categories={this.props.data.categories.catData}
-              filterNews={this.handleFilter}
-              checked={this.props.data.categories.selected}
-            />
-          </div>
-          <div className="regionRight">
-            <News news={news} />
-          </div>
-        </section>
-      </div>
+      <Page>
+        <div className="container">
+          <Header />
+          <section>
+            <div className="regionLeft">
+              <Categories
+                categories={this.props.data.categories.catData}
+                filterNews={this.handleFilter}
+                checked={this.props.data.categories.selected}
+              />
+            </div>
+            <div className="regionRight">
+              <News news={news} />
+            </div>
+          </section>
+        </div>
+      </Page>
     );
   }
 }

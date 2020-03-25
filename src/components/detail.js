@@ -24,7 +24,7 @@ class Detail extends React.Component {
       this.props.data.detail.color = category.color;
     }
     return (
-      <div style={{ background: this.props.data.detail.color }}>
+      <div style={{ color: this.props.data.detail.color }}>
         <div className="title">
           <p>{this.props.data.detail.detailData.title}</p>
           <p>{this.props.data.detail.detailData.favorite}</p>

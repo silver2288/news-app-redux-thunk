@@ -10,11 +10,18 @@ export default class News extends React.Component {
             key={index}
             newsid={el.id}
             className="post"
-            style={{ background: el.color }}
+            style={{ color: el.color }}
           >
             <h4>{el.title}</h4>
             <p>{el.description}</p>
-            <Link to={`detail/${el.categoryId}/${el.id}`}>More Info </Link>
+            <Link
+              to={{
+                pathname: `detail/${el.categoryId}/${el.id}`,
+                state: { prev: true }
+              }}
+            >
+              More Info{" "}
+            </Link>
           </div>
         ))}
       </article>
