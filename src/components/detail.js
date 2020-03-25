@@ -19,7 +19,7 @@ class Detail extends React.Component {
   render() {
     if (this.props.data.categories.catData.length > 0) {
       const category = this.props.data.categories.catData.find(
-        el => el.id == this.props.categoryid
+        el => el.id.toString() === this.props.categoryid
       );
       this.props.data.detail.color = category.color;
     }
