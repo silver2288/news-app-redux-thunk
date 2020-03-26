@@ -110,30 +110,54 @@ body {
   transition: transform 1s ease-in-out;
 }
 
-.page-enter {
-  transform: translate(-100%, 0);
+.page[data-in="test"] {
+  &.page-enter {
+    transform: translate(100%, 0);
+    z-index: 100;
+  }
+
+  &.page-enter-active {
+    transform: translate(0, 0);
+    z-index: 100;
+  }
 }
 
-.page-enter-active {
-  transform: translate(0, 0);
+.page[data-out="test2"] {
+  &.page-exit {
+    transform: translate(100%, 0);
+  }
 }
 
-.page-exit {
-  transform: translate(-100%, 0);
+.page[data-out="test"] {
+  &.page-exit {
+    transform: translate(-100%, 0);
+  }
 }
 
-.page--prev.page-enter {
-  transform: translate(100%, 0);
-}
+// .page-enter {
+//   transform: translate(-100%, 0);
+// }
 
-.page--prev.page-enter-active {
-  transform: translate(0, 0);
-}
+// .page-enter-active {
+//   transform: translate(0, 0);
+// }
 
-.page--prev.page-exit {
-  transform: translate(100%, 0);
-}
+// .page-exit {
+//   transform: translate(-100%, 0);
+// }
 
-.page h1 {
-  margin-top: 0;
-}
+// .page--prev.page-enter {
+//   transform: translate(100%, 0);
+// }
+
+// .page--prev.page-enter-active {
+//   transform: translate(0, 0);
+// }
+
+// .page--prev.page-exit {
+//   transform: translate(100%, 0);
+// }
+
+// .page h1 {
+//   margin-top: 0;
+// }

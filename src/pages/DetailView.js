@@ -2,13 +2,17 @@ import React from "react";
 import Detail from "../components/detail";
 import DetailHeader from "../components/detailHeader";
 import Page from "./Page";
-import "../App.css";
 
 export default class DetailView extends React.Component {
   render() {
     const { params } = this.props.match;
     return (
-      <Page color="#cc99ff" background="#280051">
+      <Page
+        color="#cc99ff"
+        background="#280051"
+        animationIn="test"
+        animationOut="test2"
+      >
         <div className="detail-container">
           <DetailHeader
             goBack={() => {

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import DetailView from "./pages/DetailView";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "./App.scss";
 class App extends Component {
   render() {
     return (

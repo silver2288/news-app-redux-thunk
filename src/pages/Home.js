@@ -6,7 +6,6 @@ import { toogleCategory } from "../actions/";
 import Categories from "../components/categories";
 import News from "../components/news";
 import Page from "./Page";
-import "../App.css";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -23,7 +22,7 @@ class Home extends React.Component {
       return (news = news.concat(this.props.data.news[sel].newsData));
     });
     return (
-      <Page>
+      <Page animationIn="" animationOut="test">
         <div className="container">
           <Header />
           <section>
